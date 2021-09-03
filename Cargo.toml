@@ -1,12 +1,12 @@
 [package]
-name = "passgen"
+name = "passg"
 version = "0.1.0"
 edition = "2018"
 
 license = "MIT"
 readme  = "README.md"
 description = "Generate pseudo-random passwords from the command line"
-repository = "https://github.com/xgillard/passgen"
+repository = "https://github.com/xgillard/passg"
 
 keywords   = ["password"]
 categories = ["command-line-utilities"]
