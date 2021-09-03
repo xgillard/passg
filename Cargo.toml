@@ -3,6 +3,15 @@ name = "passgen"
 version = "0.1.0"
 edition = "2018"
 
+license = "MIT"
+readme  = "README.md"
+description = "Generate pseudo-random passwords from the command line"
+repository = "https://github.com/xgillard/passgen"
+
+keywords   = ["password"]
+categories = ["command-line-utilities"]
+
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
