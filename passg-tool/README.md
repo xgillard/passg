@@ -1,22 +1,8 @@
-# PassGen  
+# PassG-tool
 PassGen is a simple command line tool to generate pseudo-random passwords
 matching a desired set of (simple constraints)
 
-## Usage (as a library)
-The crate's documentation gives an example on how to generate a random password.
-Basically, you will want to do something along these lines: 
-```rust
-use passg::prelude::*;
-
-let generator = GeneratorBuilder::default()
-    .alpha(Alpha::Dist)         // this is the default
-    .digit(Digit::Dist)         // this is the default
-    .special(Special::Basic)    // this is the default
-    .build()
-    .expect("This is never going to fail")
-```
-
-## Usage (as a tool)
+## Usage
 ```
 passg 0.2.0
 PassGen is a tool that lets you generate pseudo-random passwords from the command line

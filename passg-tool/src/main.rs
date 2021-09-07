@@ -1,4 +1,4 @@
-use passg::prelude::*;
+use passg_lib::prelude::*;
 use structopt::StructOpt;
 
 /// PassGen is a tool that lets you generate pseudo-random passwords from
