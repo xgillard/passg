@@ -1,47 +1,41 @@
-mod errors;
-mod charsets;
-
-use charsets::{Alpha, Digit, Special};
-use rand::Rng;
+use passg::prelude::*;
 use structopt::StructOpt;
-
-use crate::charsets::CollatingSeq;
 
 /// PassGen is a tool that lets you generate pseudo-random passwords from
 /// the command line.
 #[derive(Debug, StructOpt)]
 struct Args {
-    #[structopt(short, long, default_value="20")]
+    /// The length of the password
+    #[structopt(short, long, default_value = "20")]
     length: usize,
-    #[structopt(short, long, default_value="*")]
+    /// What kind of alphabetic characters do you want to allow ?
+    /// (all = 'all', none = 'none', easily distinguished = 'dist' [eg removes O vs 0],
+    /// lower case = 'lower', upper case = 'upper')
+    #[structopt(short, long, default_value = "dist")]
     alpha: Alpha,
-    #[structopt(short, long, default_value="*")]
+    /// What kind of numeric characters do you want to allow ?
+    /// (all = 'all', none = 'none', easily distinguished = 'dist' [eg removes O vs 0])
+    #[structopt(short, long, default_value = "dist")]
     digit: Digit,
-    #[structopt(short, long, default_value="*")]
+    /// What kind of special characters do you want to allow ?
+    /// (all = 'all', none = 'none', the most common ones = 'basic')
+    #[structopt(short, long, default_value = "basic")]
     special: Special,
 }
 
-impl Args {
-    pub fn generate_charset(&self) -> Vec<char> {
-        let mut chars = vec![];
-        
-        self.alpha.characters().iter().copied().for_each(|c|   chars.push(c));
-        self.digit.characters().iter().copied().for_each(|c|   chars.push(c));
-        self.special.characters().iter().copied().for_each(|c| chars.push(c));
-
-        chars
-    }
-    pub fn generate_pass(&self) -> String {
-        let charset = self.generate_charset();
-        let mut out = String::new();
-        for _ in 0..self.length {
-            let idx = rand::thread_rng().gen_range(0..charset.len());
-            out.push(charset[idx]);
-        }
-        out
+impl From<Args> for Generator {
+    fn from(args: Args) -> Generator {
+        GeneratorBuilder::default()
+            .length(args.length)
+            .alpha(args.alpha)
+            .digit(args.digit)
+            .special(args.special)
+            .build()
+            .expect("Could not build a password generator") // will not occur
     }
 }
 
 fn main() {
-    println!("{}", Args::from_args().generate_pass());
+    let generator = Generator::from(Args::from_args());
+    println!("{}", generator.generate());
 }
